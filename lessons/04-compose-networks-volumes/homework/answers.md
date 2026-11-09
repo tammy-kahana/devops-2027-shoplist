@@ -1,4 +1,3 @@
-DISK USAGE: 244MB, 92.7MB, 92.8MB
 
 1. בגלל שcompose יוצר רשת פנימית ולכן כל סרוויס מוכר בשם שלו ולא צריך ports, stats פונה דרך הרשת הפנימית הזו, והדפדפן פונה ל frontend שמעביר אותו ל backend
 
@@ -8,8 +7,8 @@ DISK USAGE: 244MB, 92.7MB, 92.8MB
 
 4. הרשת נקראת docker_default וה-volume נקרא docker_postgres-data כי compose מוסיף את שם התיקיה ו postgres-data זה שם שנתתי בקובץ.
 
-5. Nginx, הקבצים המוכנים מ-dist, והקובץ nginx.conf, אין CMD כי יורשים אותו מ nginx, ו stats .לא צריך כי אין בניה ואין חבילות להתקין
+5. ב-image הסופי יש Nginx, הקבצים המוכנים מ-dist והקובץ nginx.conf. אין בו Node, את build.js ואת קבצי המקור, כי הם נשארו בשלב הראשון. אין CMD כי יורשים אותו מ-nginx, ול-stats לא צריך multi-stage כי אין בנייה ואין חבילות להתקין.
 
-6. כי בשניהם יש רק nginx ושלושה קבצים קטנים. DISK USAGE: kitchen-244MB, multy-92.7MB, single-92.8MB
+6. כי בשניהם יש רק nginx ושלושה קבצים קטנים. DISK USAGE: kitchen-244MB, multi-92.7MB, single-92.8MB
 
 7. כי הnginx בוחר את ההתאמה הארוכה והמדויקת ביותר, ובגלל הלוכסן הוא ממיר את /api/ ל-/ וזה טוב כי זה הניתוב המתאים ל backend.
