@@ -1,6 +1,6 @@
 services:
   
-  # -מסד נתונים, שומר את המוצרים רק ה backend .מדבר איתו
+    # מסד הנתונים, שומר את המוצרים. רק ה-backend מדבר איתו
   postgres:
     image: postgres:15-alpine
     environment:
@@ -16,7 +16,7 @@ services:
       timeout: 5s
       retries: 5
 
-  #  ה-API ב-Flask, קורא וכותב מוצרים.
+    # ה-API ב-Flask, קורא וכותב מוצרים במסד postgres
   backend:
     build:
       context: ../app/backend
@@ -29,7 +29,7 @@ services:
       postgres:
         condition: service_healthy
 
-  # מבקש את רשימת המוצרים מה- backend
+    # שירות הסטטיסטיקה ב-Node.js, מבקש את רשימת המוצרים מה-backend
   stats:
     build:
       context: ../app/stats
@@ -38,7 +38,7 @@ services:
     depends_on:
       - backend
 
-  # מגיש את האתר לדפדפן ומעביר בקשות API ל backend ו stats
+    # שרת Nginx: מגיש את האתר לדפדפן ומעביר בקשות API ל-backend ול-stats
   frontend:
     build:
       context: ../app/frontend
